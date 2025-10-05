@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thadingyut Worships</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- WOW.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+
+</style>
+</head>
+<body class="bg-gradient-to-b from-indigo-950 to-purple-900">
+
+<!-- Background elements -->
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+    <div id="stars-container"></div>
+    <div class="moon"></div>
+    <div class="lantern-container"></div>
+</div>
+
+
+
+<!-- Header -->
+<header class="relative z-10 pt-[350px] text-center">
+    <h1 class="wish-text text-4xl md:text-6xl font-bold text-yellow-300" id="wish-text"></h1>
+
+    <!-- <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 mb-4 wow animate__fadeInDown">🪔 ပျော်ရွှင်စရာ သီတင်းကျွတ်လေးဖြစ်ပါစေ 🪔</h1> -->
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 py-8 max-w-6xl relative z-10">
+
+<section class="mb-16 wow animate__fadeIn praying-section">
+    <div class="bg-gradient-to-r from-purple-900/70 to-indigo-900/70 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30 shadow-lg">
+        <h2 class="text-3xl font-bold text-yellow-300 mb-4">For My Dad And Mom 🤍</h2>
+        <p class="text-lg">Thadingyut is the seventh month of the traditional Burmese calendar and marks the end of the Buddhist lent. It is celebrated with the Festival of Lights, where people light up their homes with candles, lanterns, and electric lights to welcome the Buddha's descent from heaven.</p>
+    </div>
+</section>
+
+<section class="mb-16 wow animate__fadeInUp" data-wow-delay="0.3s">
+    <h2 class="text-3xl font-bold text-center text-yellow-300 mb-8"><i class="fas fa-pray text-3xl text-yellow-300 mr-4"></i>My Worships Video<i class="fas fa-hands-praying text-3xl text-yellow-300 ms-4"></i></h2>
+    <div class="bg-gradient-to-r from-purple-900/70 to-indigo-900/70 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-lg">
+        <div class="video-container">
+            <video src="praying.mp4" autoplay controls class="rounded-2xl w-full h-auto max-h-[400px] object-cover"></video>
+        </div>
+        <p class="text-center mt-4 text-yellow-200">မေမေ့ကို ဒီကနေ အရင် ကန်တော့လိုက်ပါတယ်နော် 😁</p>
+    </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-r from-purple-900 to-indigo-900 border-t border-yellow-500/30 py-8 text-center">
+    <div class="container mx-auto px-4">
+        <p class="text-yellow-200 mb-4">🪔 May the lights of Thadingyut bring you joy, peace, and prosperity 🪔</p>
+        <p class="text-gray-400 mt-6">© 2025 Happy Thadingyut</p>
+    </div>
+</footer>
+
+<script>
+// Initialize WOW.js
+new WOW().init();
+
+// Stars
+document.addEventListener('DOMContentLoaded', function() {
+    const starsContainer = document.getElementById('stars-container');
+    const starCount = 100;
+    for(let i=0;i<starCount;i++){
+        const star = document.createElement('div');
+        star.classList.add('star','twinkle');
+        star.style.left = `${Math.random()*100}%`;
+        star.style.top = `${Math.random()*100}%`;
+        const size = Math.random()*3; star.style.width=`${size}px`; star.style.height=`${size}px`;
+        star.style.animationDelay = `${Math.random()*5}s`;
+        starsContainer.appendChild(star);
+    }
+
+    // Lanterns
+    const lanternContainer = document.querySelector('.lantern-container');
+    const lanternTypes = ['lantern-orange','lantern-pink','lantern-blue','lantern-green','lantern-purple','cylinder','round'];
+    for(let i=0;i<15;i++){
+        const lantern = document.createElement('div');
+        const type = lanternTypes[Math.floor(Math.random()*lanternTypes.length)];
+        lantern.classList.add('lantern',type);
+        lantern.style.left = `${Math.random()*90}%`;
+        lantern.style.animationDuration = `${10 + Math.random()*10}s`;
+        lantern.style.animationDelay = `${Math.random()*5}s`;
+        const scale = 0.8 + Math.random()*0.5;
+        lantern.style.transform = `scale(${scale})`;
+        lanternContainer.appendChild(lantern);
+    }
+});
+
+const text = "🪔 ပျော်ရွှင်စရာ သီတင်းကျွတ်လေးဖြစ်ပါစေ 🪔";
+const wishElement = document.getElementById("wish-text");
+let index = 0;
+
+function typeText() {
+    if (index < text.length) {
+        wishElement.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 100); // typing speed (100ms per character)
+    } else {
+        // Optional: blink cursor after typing
+        wishElement.innerHTML += '<span class="cursor">|</span>';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", typeText);
+</script>
+
+</body>
+</html>
