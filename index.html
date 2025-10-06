@@ -127,7 +127,100 @@ function typeText() {
 }
 
 document.addEventListener("DOMContentLoaded", typeText);
+
+                          // Fireworks Animation
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+let w, h;
+
+function resizeCanvas() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const fireworks = [];
+
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function Firework() {
+  this.x = random(0, w);
+  this.y = h;
+  this.targetY = random(50, h / 2);
+  this.color = `hsl(${random(0, 360)}, 100%, 60%)`;
+  this.particles = [];
+  this.exploded = false;
+}
+
+Firework.prototype.update = function () {
+  if (!this.exploded) {
+    this.y -= 6;
+    if (this.y <= this.targetY) {
+      this.exploded = true;
+      for (let i = 0; i < 30; i++) {
+        this.particles.push({
+          x: this.x,
+          y: this.y,
+          vx: random(-3, 3),
+          vy: random(-3, 3),
+          life: 100,
+          color: this.color
+        });
+      }
+    }
+  } else {
+    this.particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.05;
+      p.life -= 2;
+    });
+  }
+};
+
+Firework.prototype.draw = function () {
+  if (!this.exploded) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  } else {
+    this.particles.forEach(p => {
+      ctx.globalAlpha = p.life / 100;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+};
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+  ctx.fillRect(0, 0, w, h);
+
+  if (Math.random() < 0.05) fireworks.push(new Firework());
+
+  fireworks.forEach((f, i) => {
+    f.update();
+    f.draw();
+    if (f.exploded && f.particles.every(p => p.life <= 0)) {
+      fireworks.splice(i, 1);
+    }
+  });
+  requestAnimationFrame(animateFireworks);
+}
+
+animateFireworks();
+    
 </script>
+    <!-- Fireworks Canvas -->
+<canvas id="fireworks"></canvas>
+    
 
 </body>
 </html>
